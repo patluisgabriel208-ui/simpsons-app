@@ -1,26 +1,147 @@
 <!DOCTYPE html>
 <html lang="es-MX">
-<head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-  <title>Simpsons Explorer</title>
 
-  <link rel="stylesheet" href="css/styles.css">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>The Simpsons App</title>
+
+    <link
+        rel="stylesheet"
+        href="css/styles.css"
+    >
 </head>
 
 <body>
-  <main>
-    <h1>Simpsons Explorer</h1>
 
-    <p id="estado">Preparando conexión...</p>
+    <header>
+        <div class="logo">
+            <h1>The Simpsons</h1>
+        </div>
 
-    <h2>Respuesta de la API</h2>
-    <pre id="resultado"></pre>
-  </main>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#home">Inicio</a>
+                </li>
 
-  <script type="module" src="js/main.js"></script>
+                <li>
+                    <a href="#characters">Personajes</a>
+                </li>
+
+                <li>
+                    <a href="#episodes">Episodios</a>
+                </li>
+
+                <li>
+                    <a href="#locations">Ubicaciones</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="app">
+
+        <!-- INICIO -->
+        <section
+            id="home"
+            class="view"
+        >
+
+            <div class="hero">
+
+                <h2>
+                    Explora el universo de Los Simpson
+                </h2>
+
+                <p>
+                    Explora personajes, episodios y
+                    ubicaciones del universo de Springfield.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- PERSONAJES -->
+        <section
+            id="characters"
+            class="view"
+        >
+
+            <h2>Personajes</h2>
+
+            <div class="filter_bar">
+
+                <input
+                    type="text"
+                    id="character-search"
+                    placeholder="Buscar personaje..."
+                >
+
+                <button
+                    type="button"
+                    id="character-search-button"
+                >
+                    Buscar
+                </button>
+
+            </div>
+
+            <div class="characters"></div>
+
+            <div id="pagination"></div>
+
+        </section>
+
+        <!-- EPISODIOS -->
+        <section
+            id="episodes"
+            class="view"
+        >
+
+            <h2>Episodios</h2>
+
+            <div class="episodes"></div>
+
+            <div id="episode-pagination"></div>
+
+        </section>
+
+        <!-- UBICACIONES -->
+        <section
+            id="locations"
+            class="view"
+        >
+
+            <h2>Ubicaciones</h2>
+
+            <div class="locations"></div>
+
+            <div id="location-pagination"></div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <p>
+            Proyecto académico - The Simpsons API
+        </p>
+
+    </footer>
+
+    <script
+        type="module"
+        src="js/main.js"
+    ></script>
+
 </body>
 
+</html>
