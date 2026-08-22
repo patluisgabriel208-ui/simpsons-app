@@ -1,26 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es-MX">
 <head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-  <title>Simpsons Explorer</title>
-
-  <link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Explora personajes y episodios de Los Simpson.">
+<title>Springfield | Los Simpson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
-  <main>
-    <h1>Simpsons Explorer</h1>
-
-    <p id="estado">Preparando conexión...</p>
-
-    <h2>Respuesta de la API</h2>
-    <pre id="resultado"></pre>
-  </main>
-
-  <script type="module" src="js/main.js"></script>
+<header class="site-header">
+<a class="brand" href="#inicio">The Simpsons <span>API</span>
+</a>
+<nav aria-label="Navegación principal">
+<a class="nav-link active" href="#inicio">Inicio</a>
+<a class="nav-link" href="#personajes">Personajes</a>
+<a class="nav-link" href="#episodios">Episodios</a>
+</nav>
+</header>
+<main>
+<section id="inicio" class="hero">
+<div class="hero-content">
+<p class="eyebrow">Bienvenido a Springfield</p>
+<h1>Todo el universo de <span>Los Simpson</span>
+</h1>
+<p>Descubre a tus habitantes favoritos y revive los episodios que hicieron historia.</p>
+<div class="hero-actions">
+<a class="button button-primary" href="#personajes">Ver personajes</a>
+<a class="button button-outline" href="#episodios">Explorar episodios</a>
+</div>
+</div>
+<div class="hero-donut" aria-hidden="true">
+</div>
+</section>
+<section id="personajes" class="section">
+<div class="section-heading">
+<div>
+<p class="eyebrow">Habitantes de Springfield</p>
+<h2>Personajes</h2>
+</div>
+<p id="character-count" class="count">
+</p>
+</div>
+<form id="character-form" class="search-bar">
+<label class="sr-only" for="character-search">Buscar personaje</label>
+<input id="character-search" type="search" placeholder="Busca por nombre, por ejemplo: Lisa">
+<button class="button button-primary">Buscar</button>
+<button id="clear-character-search" class="button button-plain" type="button">Limpiar</button>
+</form>
+<p id="character-status" class="status" role="status">
+</p>
+<div id="character-grid" class="card-grid">
+</div>
+<div id="character-pagination" class="pagination">
+</div>
+</section>
+<section id="episodios" class="section episode-section">
+<div class="section-heading">
+<div>
+<p class="eyebrow">Desde 1989</p>
+<h2>Episodios</h2>
+</div>
+<p id="episode-count" class="count">
+</p>
+</div>
+<form id="episode-form" class="search-bar">
+<label class="sr-only" for="episode-search">Buscar episodio</label>
+<input id="episode-search" type="search" placeholder="Busca un episodio">
+<button class="button button-primary">Buscar</button>
+<button id="clear-episode-search" class="button button-plain" type="button">Limpiar</button>
+</form>
+<p id="episode-status" class="status" role="status">
+</p>
+<div id="episode-grid" class="card-grid episode-grid">
+</div>
+<div id="episode-pagination" class="pagination">
+</div>
+</section>
+</main>
+<footer>Proyecto académico · Datos proporcionados por The Simpsons API</footer>
+<script src="main.js">
+</script>
 </body>
-
+</html>
