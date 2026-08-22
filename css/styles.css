@@ -202,6 +202,7 @@ h2 {
   transform:translateY(-5px)
 }
 .portrait {
+  position:relative;
   height:210px;
   display:grid;
   place-items:end center;
@@ -214,6 +215,82 @@ h2 {
   height:100%;
   object-fit:contain;
   object-position:center bottom
+}
+.favorite-button {
+  position:absolute;
+  top:10px;
+  right:10px;
+  z-index:2;
+  width:38px;
+  height:38px;
+  padding:0;
+  border:none;
+  background:none;
+  cursor:pointer
+}
+.donut {
+  position:relative;
+  display:block;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  background:radial-gradient(circle at center,var(--cream) 0 24%,var(--ink) 25% 34%,#f48db4 35% 78%,#e57ba3 79% 100%);
+  box-shadow:2px 3px 0 rgba(38,51,69,.25);
+  filter:grayscale(1) opacity(.55);
+  transition:.15s
+}
+.sprinkle {
+  position:absolute;
+  width:7px;
+  height:2.5px;
+  border-radius:99px;
+  opacity:0;
+  transition:.15s
+}
+.s1 {
+  top:20%;
+  left:48%;
+  background:#74cbed;
+  transform:rotate(40deg)
+}
+.s2 {
+  top:62%;
+  left:26%;
+  background:var(--yellow);
+  transform:rotate(-25deg)
+}
+.s3 {
+  top:64%;
+  left:58%;
+  background:#fff;
+  transform:rotate(70deg)
+}
+.s4 {
+  top:32%;
+  left:22%;
+  background:#8ce28c;
+  transform:rotate(-60deg)
+}
+.favorite-button:hover .donut,.favorite-button:focus-visible .donut {
+  filter:none;
+  transform:scale(1.12) rotate(-12deg)
+}
+.favorite-button.active .donut {
+  filter:none;
+  animation:donut-pop .3s ease
+}
+.favorite-button.active .sprinkle {
+  opacity:1
+}
+.favorite-button:focus-visible {
+  border-radius:50%;
+  outline:3px solid var(--ink);
+  outline-offset:2px
+}
+@keyframes donut-pop {
+  40% {
+    transform:scale(1.3) rotate(14deg)
+  }
 }
 .card-body {
   padding:17px
