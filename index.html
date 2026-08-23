@@ -18,6 +18,11 @@
 <a class="nav-link active" href="#inicio">Inicio</a>
 <a class="nav-link" href="#personajes">Personajes</a>
 <a class="nav-link" href="#episodios">Episodios</a>
+<button id="favorites-button" class="favorites-nav" type="button" aria-haspopup="dialog" aria-label="Ver personajes favoritos">
+<span class="donut nav-donut" aria-hidden="true"><span class="sprinkle s1"></span><span class="sprinkle s2"></span><span class="sprinkle s3"></span><span class="sprinkle s4"></span></span>
+<span>Favoritos</span>
+<span id="favorites-count" class="favorites-count">0</span>
+</button>
 </nav>
 </header>
 <main>
@@ -33,6 +38,7 @@
 </div>
 </div>
 <div class="hero-donut" aria-hidden="true">
+<span class="hero-donut-body"><span class="hero-sprinkle p1"></span><span class="hero-sprinkle p2"></span><span class="hero-sprinkle p3"></span><span class="hero-sprinkle p4"></span><span class="hero-sprinkle p5"></span><span class="hero-sprinkle p6"></span><span class="hero-sprinkle p7"></span><span class="hero-sprinkle p8"></span></span>
 </div>
 </section>
 <section id="personajes" class="section">
@@ -46,7 +52,7 @@
 </div>
 <form id="character-form" class="search-bar">
 <label class="sr-only" for="character-search">Buscar personaje</label>
-<input id="character-search" type="search" placeholder="Busca por nombre, por ejemplo: Lisa">
+<input id="character-search" type="search" placeholder="Busca por nombre, por ejemplo: homer">
 <button class="button button-primary">Buscar</button>
 <button id="clear-character-search" class="button button-plain" type="button">Limpiar</button>
 </form>
@@ -80,7 +86,21 @@
 </div>
 </section>
 </main>
-<footer>Proyecto académico · Datos proporcionados por The Simpsons API</footer>
+<div id="favorites-modal" class="favorites-modal" hidden>
+<div class="favorites-backdrop">
+</div>
+<section class="favorites-panel" role="dialog" aria-modal="true" aria-labelledby="favorites-title">
+<header class="favorites-head">
+<h2 id="favorites-title">Personajes favoritos</h2>
+<button id="favorites-close" class="favorites-close" type="button" aria-label="Cerrar favoritos">×</button>
+</header>
+<p id="favorites-empty" class="favorites-empty" hidden>Aún no tienes favoritos. Toca la dona de una tarjeta para guardarla aquí.</p>
+<ul id="favorites-list" class="favorites-list"></ul>
+</section>
+</div>
+<footer>Proyecto académico · Datos proporcionados por The Simpsons API
+<span class="footer-claim">"REAL, SOLO UNA PALABRA"</span>
+</footer>
 <script src="main.js">
 </script>
 </body>

@@ -9,6 +9,13 @@ const readFavorites = () => {
 };
 const favorites = readFavorites();
 const saveFavorites = () => localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favorites]));
+const characterCache = new Map();
+const favoritesModal = document.querySelector('#favorites-modal');
+const favoritesList = document.querySelector('#favorites-list');
+const favoritesEmpty = document.querySelector('#favorites-empty');
+const favoritesCount = document.querySelector('#favorites-count');
+const updateFavoritesCount = () => { favoritesCount.textContent = favorites.size; };
+updateFavoritesCount();
 
 const escapeHtml = (value = '') => String(value).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
 const imageUrl = path => path ? `${CDN}${path}` : '';
@@ -31,6 +38,7 @@ function pagination(type, data) {
 }
 
 function characters(items) {
+  items.forEach(item => characterCache.set(String(item.id), item));
   document.querySelector('#character-grid').innerHTML = items.map(item => {
     const portrait = imageUrl(item.portrait_path);
     const isFavorite = favorites.has(String(item.id));
@@ -48,6 +56,28 @@ function toggleFavorite(event) {
   const active = favorites.has(id);
   button.classList.toggle('active', active);
   button.setAttribute('aria-pressed', String(active));
+  updateFavoritesCount();
+}
+
+async function renderFavorites() {
+  await Promise.all([...favorites].filter(id => !characterCache.has(id)).map(async id => {
+    try {
+      const response = await fetch(`${API}/characters/${id}`);
+      if (!response.ok) throw new Error('No se pudo cargar el favorito.');
+      characterCache.set(id, await response.json());
+    } catch {}
+  }));
+  favoritesList.innerHTML = [...favorites].map(id => {
+    const item = characterCache.get(id);
+    if (!item) return '';
+    const portrait = imageUrl(item.portrait_path);
+    return `<li class="favorite-item">${portrait ? `<img src="${portrait}" alt="${escapeHtml(item.name)}" loading="lazy">` : '<span class="fallback-donut" aria-hidden="true">🍩</span>'}<div class="favorite-info"><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.occupation || 'Habitante de Springfield')}</p></div><button type="button" class="favorite-remove" data-id="${id}" aria-label="Quitar a ${escapeHtml(item.name)} de favoritos">×</button></li>`;
+  }).join('');
+  favoritesEmpty.hidden = favoritesList.children.length > 0;
+}
+
+function closeFavorites() {
+  favoritesModal.hidden = true;
 }
 
 function episodes(items) {
@@ -84,4 +114,22 @@ function bind(type) {
 }
 document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', () => { document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active')); link.classList.add('active'); }));
 document.querySelector('#character-grid').addEventListener('click', toggleFavorite);
+document.querySelector('#favorites-button').addEventListener('click', () => {
+  if (favoritesModal.hidden) { renderFavorites(); favoritesModal.hidden = false; }
+  else closeFavorites();
+});
+document.querySelector('#favorites-close').addEventListener('click', closeFavorites);
+document.querySelector('.favorites-backdrop').addEventListener('click', closeFavorites);
+document.addEventListener('keydown', event => { if (event.key === 'Escape') closeFavorites(); });
+favoritesList.addEventListener('click', event => {
+  const button = event.target.closest('.favorite-remove');
+  if (!button) return;
+  const id = button.dataset.id;
+  favorites.delete(id); saveFavorites();
+  button.closest('li').remove();
+  favoritesEmpty.hidden = favoritesList.children.length > 0;
+  updateFavoritesCount();
+  const gridButton = document.querySelector(`#character-grid .favorite-button[data-id="${id}"]`);
+  if (gridButton) { gridButton.classList.remove('active'); gridButton.setAttribute('aria-pressed', 'false'); }
+});
 bind('characters'); bind('episodes'); load('characters'); load('episodes');
