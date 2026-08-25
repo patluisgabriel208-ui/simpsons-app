@@ -1,6 +1,6 @@
 const API = 'https://thesimpsonsapi.com/api';
 const CDN = 'https://cdn.thesimpsonsapi.com/500';
-const state = { characters: { page: 1, query: '' }, episodes: { page: 1, query: '' } };
+const state = { characters: { page: 1, query: '' }, episodes: { page: 1, query: '' }, locations: { page: 1, query: '' } };
 const FAVORITES_KEY = 'springfield-favorites';
 
 const readFavorites = () => {
@@ -88,6 +88,15 @@ function episodes(items) {
   }).join('');
 }
 
+function locations(items) {
+  document.querySelector('#location-grid').innerHTML = items.map((item, index) => {
+    const image = imageUrl(item.image_path);
+    const town = item.town || 'Springfield';
+    const use = item.use || 'Lugar emblemático';
+    return `<article class="location-card" style="--card-index:${index}"><div class="location-image">${image ? `<img src="${image}" alt="${escapeHtml(item.name)}" loading="lazy">` : '<span aria-hidden="true">📍</span>'}</div><div class="card-body"><p class="location-town">${escapeHtml(town)}</p><h3>${escapeHtml(item.name)}</h3><p class="location-use">${escapeHtml(use)}</p><span class="location-badge"><span aria-hidden="true">✦</span> Explorar Springfield</span></div></article>`;
+  }).join('');
+}
+
 async function load(type) {
   const base = baseOf(type), grid = document.querySelector(`#${base}-grid`);
   status(type, 'Cargando datos de Springfield…'); grid.setAttribute('aria-busy', 'true');
@@ -97,7 +106,9 @@ async function load(type) {
     const data = await response.json();
     const query = state[type].query.trim().toLocaleLowerCase('es');
     const results = query ? data.results.filter(item => item.name.toLocaleLowerCase('es').includes(query)) : data.results;
-    type === 'characters' ? characters(results) : episodes(results);
+    if (type === 'characters') characters(results);
+    else if (type === 'episodes') episodes(results);
+    else locations(results);
     document.querySelector(`#${base}-count`).textContent = query ? `${results.length} coincidencias en esta página` : `${data.count} registros disponibles`;
     status(type, results.length ? '' : 'No hubo coincidencias en esta página. Prueba otro nombre o navega de página.');
     pagination(type, data);
@@ -132,4 +143,4 @@ favoritesList.addEventListener('click', event => {
   const gridButton = document.querySelector(`#character-grid .favorite-button[data-id="${id}"]`);
   if (gridButton) { gridButton.classList.remove('active'); gridButton.setAttribute('aria-pressed', 'false'); }
 });
-bind('characters'); bind('episodes'); load('characters'); load('episodes');
+bind('characters'); bind('episodes'); bind('locations'); load('characters'); load('episodes'); load('locations');

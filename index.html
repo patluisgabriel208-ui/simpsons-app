@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Explora personajes y episodios de Los Simpson.">
+<meta name="description" content="Explora personajes, episodios y ubicaciones de Los Simpson.">
 <title>Springfield | Los Simpson</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +18,7 @@
 <a class="nav-link active" href="#inicio">Inicio</a>
 <a class="nav-link" href="#personajes">Personajes</a>
 <a class="nav-link" href="#episodios">Episodios</a>
+<a class="nav-link" href="#ubicaciones">Ubicaciones</a>
 <button id="favorites-button" class="favorites-nav" type="button" aria-haspopup="dialog" aria-label="Ver personajes favoritos">
 <span class="donut nav-donut" aria-hidden="true"><span class="sprinkle s1"></span><span class="sprinkle s2"></span><span class="sprinkle s3"></span><span class="sprinkle s4"></span></span>
 <span>Favoritos</span>
@@ -35,6 +36,7 @@
 <div class="hero-actions">
 <a class="button button-primary" href="#personajes">Ver personajes</a>
 <a class="button button-outline" href="#episodios">Explorar episodios</a>
+<a class="button button-outline" href="#ubicaciones">Visitar lugares</a>
 </div>
 </div>
 <div class="hero-donut" aria-hidden="true">
@@ -84,6 +86,24 @@
 </div>
 <div id="episode-pagination" class="pagination">
 </div>
+</section>
+<section id="ubicaciones" class="section locations-section">
+<div class="section-heading">
+<div>
+<p class="eyebrow">El mapa de Springfield</p>
+<h2>Ubicaciones</h2>
+</div>
+<p id="location-count" class="count"></p>
+</div>
+<form id="location-form" class="search-bar">
+<label class="sr-only" for="location-search">Buscar ubicación</label>
+<input id="location-search" type="search" placeholder="Busca un lugar, por ejemplo: Moe">
+<button class="button button-primary">Buscar</button>
+<button id="clear-location-search" class="button button-plain" type="button">Limpiar</button>
+</form>
+<p id="location-status" class="status" role="status"></p>
+<div id="location-grid" class="card-grid location-grid"></div>
+<div id="location-pagination" class="pagination"></div>
 </section>
 </main>
 <div id="favorites-modal" class="favorites-modal" hidden>

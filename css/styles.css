@@ -142,7 +142,6 @@ h1 span {
   border:17px solid var(--ink);
   border-radius:50%;
   background:radial-gradient(circle at center,var(--blue) 0 22%,var(--ink) 23% 29%,#f85a97 30% 100%);
-<<<<<<< Updated upstream
   animation:donut-rotate 16s linear infinite
 }
 .hero-sprinkle {
@@ -204,14 +203,6 @@ h1 span {
     transform:rotate(360deg)
   }
 }
-@media(prefers-reduced-motion:reduce) {
-  .hero-donut-body {
-    animation:none
-  }
-=======
-  box-shadow:12px 15px 0 rgba(38,51,69,.2);
-  transform:rotate(14deg)
->>>>>>> Stashed changes
 }
 .section {
   padding:78px clamp(20px,7vw,110px)
@@ -407,6 +398,101 @@ h2 {
 }
 .episode-grid {
   grid-template-columns:repeat(auto-fill,minmax(280px,1fr))
+}
+.locations-section {
+  background:linear-gradient(155deg,#fff8df 0%,#e4f7ff 100%)
+}
+.location-grid {
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr))
+}
+.location-card {
+  overflow:hidden;
+  border:3px solid var(--ink);
+  border-radius:15px;
+  background:#fff;
+  box-shadow:0 10px 0 rgba(39,51,69,.12);
+  animation:location-arrive .5s both;
+  animation-delay:calc(var(--card-index) * 45ms);
+  transition:transform .2s ease,box-shadow .2s ease
+}
+.location-card:hover {
+  transform:translateY(-7px) rotate(-1deg);
+  box-shadow:0 15px 0 rgba(39,51,69,.18)
+}
+.location-image {
+  position:relative;
+  height:170px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:var(--blue);
+  border-bottom:3px solid var(--ink);
+  color:var(--ink);
+  font-size:3rem
+}
+.location-image::after {
+  position:absolute;
+  inset:0;
+  content:"";
+  background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.4) 50%,transparent 65%);
+  transform:translateX(-125%);
+  transition:transform .6s ease
+}
+.location-card:hover .location-image::after {
+  transform:translateX(125%)
+}
+.location-image img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .35s ease
+}
+.location-card:hover .location-image img {
+  transform:scale(1.08)
+}
+.location-town {
+  margin:0 0 5px;
+  color:var(--red);
+  font-size:.75rem;
+  font-weight:900;
+  letter-spacing:.8px;
+  text-transform:uppercase
+}
+.location-use {
+  min-height:24px;
+  margin:0 0 13px;
+  color:#526071;
+  font-size:.9rem;
+  font-weight:700
+}
+.location-badge {
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 9px;
+  border-radius:99px;
+  background:#d7f3c5;
+  color:#346429;
+  font-size:.74rem;
+  font-weight:900
+}
+.location-card:hover .location-badge span {
+  animation:twinkle .6s ease-in-out infinite alternate
+}
+@keyframes location-arrive {
+  from {
+    opacity:0;
+    transform:translateY(18px) scale(.97)
+  }
+  to {
+    opacity:1;
+    transform:translateY(0) scale(1)
+  }
+}
+@keyframes twinkle {
+  to {
+    transform:rotate(18deg) scale(1.35)
+  }
 }
 .episode-image {
   height:155px;
@@ -647,6 +733,14 @@ h2 {
 .favorite-remove:hover {
   background:var(--red);
   color:#fff
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    scroll-behavior:auto !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important
+  }
 }
 .sr-only {
   position:absolute;
