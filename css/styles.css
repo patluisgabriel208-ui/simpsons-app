@@ -713,3 +713,47 @@ footer {
   grid-template-columns:1fr
 }
 }
+.hero-donut {
+  animation: donut-entry 1.2s ease-out both, donut-float 3s ease-in-out infinite 1.2s;
+}
+
+.hero-donut-body {
+  animation: donut-spin 8s linear infinite;
+}
+
+@keyframes donut-entry {
+  0% {
+    opacity: 0;
+    transform: translateX(120px) scale(0.75) rotate(-180deg);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateX(-10px) scale(1.05) rotate(15deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes donut-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes donut-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
