@@ -142,8 +142,8 @@ h1 span {
   border:17px solid var(--ink);
   border-radius:50%;
   background:radial-gradient(circle at center,var(--blue) 0 22%,var(--ink) 23% 29%,#f85a97 30% 100%);
-<<<<<<< Updated upstream
-  animation:donut-rotate 16s linear infinite
+  animation:donut-rotate 16s linear infinite;
+  transform:rotate(14deg)
 }
 .hero-sprinkle {
   position:absolute;
@@ -200,18 +200,17 @@ h1 span {
   transform:rotate(85deg)
 }
 @keyframes donut-rotate {
+  from {
+    transform:rotate(14deg)
+  }
   to {
-    transform:rotate(360deg)
+    transform:rotate(374deg)
   }
 }
 @media(prefers-reduced-motion:reduce) {
   .hero-donut-body {
     animation:none
   }
-=======
-  box-shadow:12px 15px 0 rgba(38,51,69,.2);
-  transform:rotate(14deg)
->>>>>>> Stashed changes
 }
 .section {
   padding:78px clamp(20px,7vw,110px)

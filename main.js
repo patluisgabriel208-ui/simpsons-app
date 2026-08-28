@@ -14,6 +14,8 @@ const favoritesModal = document.querySelector('#favorites-modal');
 const favoritesList = document.querySelector('#favorites-list');
 const favoritesEmpty = document.querySelector('#favorites-empty');
 const favoritesCount = document.querySelector('#favorites-count');
+const favoritesButton = document.querySelector('#favorites-button');
+const favoritesClose = document.querySelector('#favorites-close');
 const updateFavoritesCount = () => { favoritesCount.textContent = favorites.size; };
 updateFavoritesCount();
 
@@ -33,7 +35,7 @@ function pagination(type, data) {
   node.innerHTML = `<button data-page="${page - 1}" ${page === 1 ? 'disabled' : ''}>← Anterior</button><span>Página ${page} de ${data.pages}</span><button data-page="${page + 1}" ${page === data.pages ? 'disabled' : ''}>Siguiente →</button>`;
   node.querySelectorAll('button').forEach(button => button.addEventListener('click', () => {
     state[type].page = Number(button.dataset.page); load(type);
-    document.querySelector(`#${type}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    node.closest('section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }));
 }
 
@@ -76,8 +78,15 @@ async function renderFavorites() {
   favoritesEmpty.hidden = favoritesList.children.length > 0;
 }
 
+function openFavorites() {
+  renderFavorites();
+  favoritesModal.hidden = false;
+  favoritesClose.focus();
+}
+
 function closeFavorites() {
   favoritesModal.hidden = true;
+  favoritesButton.focus();
 }
 
 function episodes(items) {
@@ -114,13 +123,18 @@ function bind(type) {
 }
 document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', () => { document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active')); link.classList.add('active'); }));
 document.querySelector('#character-grid').addEventListener('click', toggleFavorite);
-document.querySelector('#favorites-button').addEventListener('click', () => {
-  if (favoritesModal.hidden) { renderFavorites(); favoritesModal.hidden = false; }
-  else closeFavorites();
-});
-document.querySelector('#favorites-close').addEventListener('click', closeFavorites);
+favoritesButton.addEventListener('click', () => { favoritesModal.hidden ? openFavorites() : closeFavorites(); });
+favoritesClose.addEventListener('click', closeFavorites);
 document.querySelector('.favorites-backdrop').addEventListener('click', closeFavorites);
-document.addEventListener('keydown', event => { if (event.key === 'Escape') closeFavorites(); });
+document.addEventListener('keydown', event => { if (event.key === 'Escape' && !favoritesModal.hidden) closeFavorites(); });
+favoritesModal.addEventListener('keydown', event => {
+  if (event.key !== 'Tab') return;
+  const focusables = [...favoritesModal.querySelectorAll('button:not([disabled])')];
+  if (!focusables.length) return;
+  const first = focusables[0], last = focusables[focusables.length - 1];
+  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+  else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+});
 favoritesList.addEventListener('click', event => {
   const button = event.target.closest('.favorite-remove');
   if (!button) return;
